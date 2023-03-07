@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!--CSS-->
+  <link rel="stylesheet" href="./css/style.css">
+  <!--Google Fonts-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="header-navbar">
+      <!--logo-->
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Universidad_Privada_San_Juan_Bautista.png" width="55px" height="55px" alt="">
+      <nav class="navbar-container">
+        <span class="menu-icon"></span>
+        <ul class="navbar inactive">
+          <span class="close-icon"></span>
+          <li><a class="active" href="#inicio">Inicio</a></li>
+          <li><a href="#Resultados">Resultados</a></li>
+          <li><a href="#Github">Github</a></li>
+          <li><a href="#Contactos">Contactos</a></li>
+        </ul>
+      </nav>
+    </div>
+    <section id="inicio" class="header-hero">
+      <div class="header-hero-container">
+        <div class="header-hero-content">
+          <h1>¡Bienvenido/a a Qallariy!</h1>
+          <p>Esta herramienta te permitirá calcular la distribución de la utilidad neta en una inversión entre los socios en función de su inversión inicial. Sabemos lo importante que es tomar decisiones informadas y estratégicas al momento de realizar inversiones, y es por eso que hemos desarrollado Qallariy en JavaScript para facilitar tu proceso de análisis y tomar decisiones acertadas.</p>
+          <p>Ingresa tus datos de inversión y obtén resultados precisos y rápidos. </p>
+          <a href="#form"><button class="header-hero-btn">¡Comienza ya!</button></a>
+        </div>
+        <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
+      </div>
+    </section>
+  </header>
+  <main>
+    <div class="waves-bg">
+      <img src="./assets/icons/waves-div.svg" alt="">
+    </div>
+    <section id="form"class="main-form">
+      <img src="https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
+      <form action="">
+        <h1>Ingresa los datos de tu inversión</h1>
+        <div class="main-form-img">
+          <img src="./assets/icons/logo.jpg" alt="">
+        </div>
+        <label for="name-activity">
+          <h2>Nombre de la actividad</h2>
+          <input type="text" placeholder="Ej. Compra y venta de Smartphones">
+        </label>
+        <label for="startup-capital">
+          <h2>Capital inicial</h2>
+          <div class="startup-capital">
+            <span>S/. </span>
+            <input type="number" placeholder="Ej. 10000 ">
+          </div>
+        </label>
+        <label for="capital-end">
+          <h2>Capital final</h2>
+          <div class="capital-end">
+            <span>S/. </span>
+            <input type="number" placeholder="Ej. 20000"> 
+          </div>
+        </label>
+        <label class="quantity-partners" for="quantity-partners">
+          <h2>Cantidad de socios</h2>
+          <!--lista plegable-->
+          <select name="quantity-partners" id="quantity-partners">
+            <option selected disabled>--</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </label>
+        <div class="main-form-btns">
+          <button type="button" class="main-form-btns-reset">Reset</button>
+          <a href="#partners"><button type="button" class="main-form-btns-submit"> Calcular</button></a>
+          
+        </div>
+      </form>
+    </section>
+    <section id="partners" class="form-partners">
+      <h1>Ingresa los datos de los socios</h1>
+      <div class="form-partners_fieldset">
+        <fieldset class="partners_container">
+          <legend>Socio 1</legend>
+          <label for="name-partner">
+            <h2>Nombre del socio</h2>
+            <input type="text" placeholder="Ej. Juan Pérez">
+          </label>
+          <label for="capital-partner">
+            <h2>Capital del socio</h2>
+            <div class="capital-partner">
+              <span>S/. </span>
+              <input type="number" placeholder="Ej. 5000">
+            </div>
+          </label>
+        </fieldset>
+        <fieldset class="partners_container">
+          <legend>Socio 1</legend>
+          <label for="name-partner">
+            <h2>Nombre del socio</h2>
+            <input type="text" placeholder="Ej. Juan Pérez">
+          </label>
+          <label for="capital-partner">
+            <h2>Capital del socio</h2>
+            <div class="capital-partner">
+              <span>S/. </span>
+              <input type="number" placeholder="Ej. 5000">
+            </div>
+          </label>
+        </fieldset>
+        
+      </div>
+      <button class="btn_partners" type="button">Calcular</button>    
+
+    </section>
+    <section id="Resultados" class="table-results-previous">
+      <h1>Resultados Anteriores</h1>
+      <div class="table-results-previous-contain">
+        <table>
+           <!--columnas-->
+          <thead>
+            <tr>
+              <th>Nombre de la actividad</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+          </tr>
+        </thead>
+        <!--filas-->
+          <tbody>
+            <tr>
+              <td>Compra y venta de Smartphones</td>
+              <td>12/12/2020</td>
+              <td><button class="btn-results">Ver</button></td>
+            </tr>
+            <tr>
+              <td>Compra y venta de Smartphones</td>
+              <td>12/12/2020</td>
+              <td><button class="btn-results">Ver</button></td>
+            </tr>
+            <tr>
+              <td>Compra y venta de Smartphones</td>
+              <td>12/12/2020</td>
+              <td><button class="btn-results">Ver</button></td>
+            </tr>
+            <tr>
+              <td>Compra y venta de Smartphones</td>
+              <td>12/12/2020</td>
+              <td><button class="btn-results">Ver</button></td>
+            </tr>
+            <tr>
+              <td>Compra y venta de Smartphones</td>
+              <td>12/12/2020</td>
+              <td><button class="btn-results">Ver</button></td>
+            </tr>
+          </tbody>
+  
+        </table>
+      </div>
+    </section>
+  </main>
+  <footer>    
+  </footer>
+  <!--Archivos js donde se encuentra la logica de la aplicación-->
+  <script src="./script/app.js"></script>
+  <!--Archivos js donde se encuentra la logica de la barra de navegación-->
+  <script src="./script/navbar.js"></script>
+</body>
+</html>
