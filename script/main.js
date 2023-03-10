@@ -51,7 +51,7 @@ function generatePartnersFieldSet() {
                 });
                 return false;
             }
-            if (inputCapitalFinal.value <= inputCapitalInitial.value){
+            if (parseFloat(inputCapitalFinal.value) <= parseFloat(inputCapitalInitial.value)){
                 swal({
                     title: "Error",
                     text: "El monto de la capital final debe ser mayor al monto de la capital inicial",
@@ -114,8 +114,10 @@ function generatePartnersFieldSet() {
         `
     }
     partnersSection.innerHTML += `
-    <button class="btn_partners" onClick="showChartJs()" type="button">Calcular</button>   
+    <button class="btn_partners" type="button">Calcular</button>   
     `
+    const btnPartners = document.querySelector('.btn_partners');
+    btnPartners.addEventListener('click', showChartJs);
 }
 
 // Selecciono el btn reset del formulario principal
