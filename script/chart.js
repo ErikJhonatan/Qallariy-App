@@ -17,7 +17,7 @@ function showChartJs(){
         'Yellow'
         ],
         datasets: [{
-        label: 'My First Dataset',
+        label: 'Mi utilidad Neta',
         data: [300, 50, 100],
         backgroundColor: listColours,
         hoverOffset: 4,
@@ -35,10 +35,17 @@ function showChartJs(){
                 },
                 title: {
                     display: true,
-                    text: 'Distribución de la utilidad',
+                    text: 'Distribución de las ganancias',
                     font: {
                         size: 20,
-                    }
+                    },
+                },
+                subtitle : {
+                    display: true,
+                    text: 'Mi utilidad Neta',
+                    font: {
+                        size: 15,
+                    },
                 },
             }
         }
