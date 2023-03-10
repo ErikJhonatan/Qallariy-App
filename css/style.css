@@ -550,7 +550,7 @@ header .header-navbar .navbar-container ul li a.active {
 }
 .chartResult-section .chartResult{
     width: 100%;
-    max-width: 1200px;
+    max-width: 650px;
     padding: 0px 24px;
     height: auto;
 }
