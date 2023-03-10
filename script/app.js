@@ -26,3 +26,4 @@ function calculateProfitOfEachPartner(totalInvestmentCapital, investmentPartners
         partner.netProfit = parseFloat(partner.netProfit.toFixed(2));
     });
 }
+export {investmentPartners, totalInvestmentCapital, nameActivity, netProfit, calculateProfitOfEachPartner};
