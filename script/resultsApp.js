@@ -13,7 +13,7 @@ function createResult(nameActivity, totalInvestmentCapital, capitalFinal, listPa
 }
 function saveResults(objectResult){
     const nameItemLocalStorage = 'results_qallariy-App-1.0.0';
-    let results = JSON.parse(localStorage.getItem(nameItemLocalStorage));
+    let results = getResults();
     if(results === null){
         results = [];
     }
@@ -21,20 +21,15 @@ function saveResults(objectResult){
     localStorage.setItem(nameItemLocalStorage, JSON.stringify(results));
 }
 
-function getResults(){
-    const nameItemLocalStorage = 'results_qallariy-App-1.0.0';
-    const results = JSON.parse(localStorage.getItem(nameItemLocalStorage));
-
-    if (results === null) {
-        return [];
-    } else {
-        results.forEach(result => {
-            result.createdAt = new Date(result.createdAt);
-        });
-        
-    }
-    
-    return results;
+function getResults() {
+    try {
+        const results = JSON.parse(localStorage.getItem('results_qallariy-App-1.0.0'));
+        if (!Array.isArray(results)) return [];
+        return results.filter(result => result && Array.isArray(result.listPartners) &&
+            Number.isFinite(result.totalInvestmentCapital) && Number.isFinite(result.netProfit) && result.listPartners.every(partner => partner && typeof partner.name === 'string' && Number.isFinite(partner.investmentCapital) && Number.isFinite(partner.netProfitPartner) && Number.isFinite(partner.percentageProfit)) &&
+            Number.isFinite(new Date(result.createdAt).getTime()))
+            .map(result => ({...result, createdAt: new Date(result.createdAt)}));
+    } catch { return []; }
 }
 
 function deleteByCreatedAt(createdAt) {
@@ -45,7 +40,5 @@ function deleteByCreatedAt(createdAt) {
       return resultCreatedAt.getTime() !== targetCreatedAt.getTime();
     });
     localStorage.setItem('results_qallariy-App-1.0.0', JSON.stringify(newResults));
-    console.log('newResults', newResults);
-    console.log('localStorage', localStorage.getItem('results_qallariy-App-1.0.0'));
   }
 export {createResult, saveResults, getResults, deleteByCreatedAt};

@@ -29,7 +29,7 @@ function generatePartnersFieldSet() {
 
     function validateForm(inputActivityName, inputCapitalInitial, inputCapitalFinal, selectAmountPartners){
     // Verifico si ingresaron el nombre de la actividad
-        if(inputActivityName.value === ''){
+        if(inputActivityName.value.trim() === ''){
             swal({
                 title: "Error",
                 text: "Por favor, ingresa el nombre de la actividad",
@@ -40,7 +40,7 @@ function generatePartnersFieldSet() {
         }
 
         // Verifico si ingresaron el monto de la capital inicial
-        if(inputCapitalInitial.value === ''){
+        if(!Number.isFinite(Number(inputCapitalInitial.value)) || Number(inputCapitalInitial.value) <= 0){
             swal({
                 title: "Error",
                 text: "Por favor, ingresa el monto de la capital inicial",
@@ -53,7 +53,7 @@ function generatePartnersFieldSet() {
         // Función que valida el monto de la capital final
         function validateCapitalFinal(inputCapitalFinal, inputCapitalInitial){
             // Verifico si ingresaron el monto de la capital final
-            if(inputCapitalFinal.value === ''){
+            if(inputCapitalFinal.value === '' || !Number.isFinite(Number(inputCapitalFinal.value))){
                 swal({
                     title: "Error",
                     text: "Por favor, ingresa el monto de la capital final",
@@ -119,15 +119,15 @@ function generatePartnersFieldSet() {
         partnersFieldSetContainer.innerHTML += `
             <fieldset class="partners_container">
             <legend class="partner-number">Socio ${i+1}</legend>
-            <label for="name-partner">
+            <label for="name-partner-${i}">
             <h2>Nombre del socio</h2>
-            <input id="name-partner" type="text" placeholder="Ej. Juan Pérez">
+            <input id="name-partner-${i}" class="name-partner" type="text" placeholder="Ej. Juan Pérez">
             </label>
-            <label for="capital-partner">
+            <label for="capital-partner-${i}">
             <h2>Capital del socio</h2>
             <div class="capital-partner">
                 <span>S/. </span>
-                <input type="number" placeholder="Ej. 5000">
+                <input id="capital-partner-${i}" type="number" min="0.01" step="0.01" placeholder="Ej. 5000">
             </div>
             </label>
         </fieldset>
@@ -148,70 +148,19 @@ function generatePartnersFieldSet() {
 
     inputArray.forEach(item =>{ item.addEventListener('change',dataEntered);
     });
-    function dataEntered (){
-        const input = Array.from(inputArray);
-        const inputCapital = Array.from(inputCapitalArray);
-        const inputCompleted = input.every(item => item.value !=='');
-        if(inputCompleted){
-            btnPartners.disabled = false;
+    function dataEntered() {
+        const inputs = Array.from(inputCapitalArray);
+        const total = Math.round(Number(inputCapitalInitial.value) * 100);
+        const preceding = inputs.slice(0, -1);
+        if (preceding.every(input => input.value.trim() && Number(input.value) > 0 && Number.isFinite(Number(input.value)))) {
+            const remainder = total - preceding.reduce((sum, input) => sum + Math.round(Number(input.value) * 100), 0);
+            inputs.at(-1).value = remainder > 0 ? (remainder / 100).toFixed(2) : '';
         }
-
-        
-        const capitalInitialValue = document.querySelector('#capital-initial_input').value;
-        const capitalInitialValueNumber = parseFloat(capitalInitialValue);
-        const index = inputCapital.length - 1;
-        const inputCapitalCut = inputCapital.slice(0, index);
-        const state = inputCapitalCut.every(item => item.value !=='');
-        console.log(inputCapitalCut);
-        console.log(state);
-        if (state){
-            console.log('true');
-            const cutInput = inputCapital.slice(0, index);
-            const sumCutInput = cutInput.reduce((acc, item)=>{
-                const itemValue = item.value;
-                const itemValueNumber = itemValue === '' ? 0 : parseFloat(itemValue);
-                return acc + itemValueNumber;
-            },0);
-            const valueCompletedInput = parseFloat(capitalInitialValue) - sumCutInput;
-
-            if ((valueCompletedInput < 0 || valueCompletedInput === 0)){
-                swal({
-                    title: "Error",
-                    text: "El monto del capital de un socio no puede ser mayor o igual al monto de la capital inicial",
-                    icon: "error",
-                    button: "Aceptar",
-                });
-                inputCapital[index].value = '';
-                inputCapital[index-1].value = '';
-                btnPartners.disabled = true;
-                return;
-            }
-
-            inputCapital[index].value = valueCompletedInput;
-            const inputCompleted = input.every(item => item.value !=='');
-            if(inputCompleted){
-                btnPartners.disabled = false;
-            }
-
-        }
-        const sumInvestments = inputCapital.reduce((acc, partner)=>{
-            const partnerValue = partner.value;
-            const partnerValueNumber = partnerValue === '' ? 0 : parseFloat(partnerValue);
-            return acc + partnerValueNumber;
-        },0)
-        console.log(sumInvestments);
-        if(!(sumInvestments <= capitalInitialValueNumber)){
-            swal({
-                title: "Error",
-                text: "La suma de los capitales de los socios debe ser igual al monto de la capital inicial",
-                icon: "error",
-                button: "Aceptar",
-            });
-            console.log(sumInvestments, capitalInitialValueNumber);
-        } else if(inputCompleted){
-            btnPartners.disabled = false;
-        }
-    };
+        const valid = Array.from(inputArray).every(input => input.value.trim()) &&
+            inputs.every(input => Number.isFinite(Number(input.value)) && Number(input.value) > 0) &&
+            inputs.reduce((sum, input) => sum + Math.round(Number(input.value) * 100), 0) === total;
+        btnPartners.disabled = !valid;
+    }
     btnPartners.addEventListener('click', calculateResults);
     function calculateResults(){
         const inputCapitalArray = document.querySelectorAll('.capital-partner input');
@@ -223,7 +172,7 @@ function generatePartnersFieldSet() {
         },0)
         const capitalInitialValue = document.querySelector('#capital-initial_input').value;
         const capitalInitialValueNumber = parseFloat(capitalInitialValue);
-        if(!(sumInvestments === capitalInitialValueNumber)){
+        if(Math.round(sumInvestments * 100) !== Math.round(capitalInitialValueNumber * 100) || inputCapital.some(input => !Number.isFinite(Number(input.value)) || Number(input.value) <= 0)){
             swal({
                 title: "Error",
                 text: ` La suma de los capitales de los socios debe ser igual al monto de la capital inicial`,
@@ -236,7 +185,7 @@ function generatePartnersFieldSet() {
         const partnersContainerArray = Array.from(partnersContainer);
 
         const listPartners = partnersContainerArray.map(partner => {
-            const namePartner = partner.querySelector('#name-partner').value;
+            const namePartner = partner.querySelector('.name-partner').value;
             const capitalPartner = partner.querySelector('.capital-partner input').value;
             const capitalPartnerNumber = parseFloat(capitalPartner);
             return {
@@ -246,10 +195,10 @@ function generatePartnersFieldSet() {
         });
         
         const resultCreate = createResult(inputActivityName.value, inputCapitalInitial.value, inputCapitalFinal.value, listPartners);
-        console.log(resultCreate);
-        const listPartnersResultArray = calculateProfitOfEachPartner(resultCreate);
+        let listPartnersResultArray;
+        try { listPartnersResultArray = calculateProfitOfEachPartner(resultCreate); }
+        catch (error) { swal('Error', error.message, 'error'); return; }
         resultCreate.listPartners = listPartnersResultArray;
-        console.log(resultCreate.createdAt);
         showResult(resultCreate);
     }
 }
@@ -277,7 +226,6 @@ function resetForm(){
 
     const arrayInputs = [inputActivityName, inputCapitalInitial, inputCapitalFinal];
     const arrayInputsEmpty = arrayInputs.every(input => input.value ==='' && selectAmountPartners.value == '--');
-    console.log(arrayInputsEmpty);
     if(!arrayInputsEmpty){
         swal({
             title: "¿Estás seguro?",

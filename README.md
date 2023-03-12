@@ -27,3 +27,7 @@ Proyecto académico. Utiliza números de JavaScript y redondeo a dos decimales; 
 ## Licencia
 
 Consulta `LICENSE.md`. La página de presentación del proyecto está en [landing-page-qallary](https://github.com/ErikJhonatan/landing-page-qallary).
+
+## Cambios de comportamiento
+
+La distribución exige capital positivo y aportes positivos que sumen el capital inicial. Se calcula en céntimos y los céntimos restantes se asignan a los mayores restos proporcionales para conservar la utilidad total. Un historial dañado se omite al leerlo; los nombres se presentan como texto.

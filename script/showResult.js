@@ -1,3 +1,4 @@
+import {escapeHtml} from './escape-html.js';
 import { partnersSection, inputActivityName, inputCapitalInitial, inputCapitalFinal, selectAmountPartners } from './main.js';
 import {saveResults, getResults} from './resultsApp.js';
 import { renderResultsPrevious } from './resultsPrevious.js';
@@ -15,6 +16,7 @@ const listColours = [
     'rgb(255, 205, 86)',
     'rgb(75, 192, 192)',
 ]
+let activeChart;
 const body = document.querySelector('body');
 
 
@@ -33,13 +35,15 @@ function showResult(objResult) {
     // Selecciono la section chartResult-section
     const chartResultSection = document.querySelector('.chartResult-section');
     chartResultSection.classList.add('show');
+    activeChart?.destroy();
+    activeChart = undefined;
     chartResultSection.innerHTML = "";
     chartResultSection.innerHTML = `
     <div class="chartResult-section-container">
       <span class="close-icon_result"></span>
       <div class="chartResult-section-contain">
       <h1>Resultados</h1>
-      <p>Nombre del emprendimiento: <span id="nameActivity">${nameActivity}</span></p>
+      <p>Nombre del emprendimiento: <span id="nameActivity">${escapeHtml(nameActivity)}</span></p>
       <p>Capital inicial: <span id="capitalInitial">S/. ${totalInvestmentCapital}</span></p>
       <p>Venta final: <span id="capitalFinal">S/. ${capitalFinal}</span></p>
       <p>La utilidad neta de la inversión es de: <span id="utilidadNeta">S/. ${netProfit}</span></p>
@@ -72,18 +76,18 @@ function showResult(objResult) {
         <!--filas-->
         <tbody id="table-partners">
           <tr>
-            <td>${partner.name}</td>
+            <td>${escapeHtml(partner.name)}</td>
             <td>S/. ${partner.investmentCapital}</td>
             <td>${partner.percentageProfit}%</td>
             <td>S/. ${partner.netProfitPartner}</td>
           </tr>
         `});
         
-    window.addEventListener('resize', () => {
-        myChart.resize();
-    });
+
     const closeIconResult = document.querySelector('.close-icon_result');
     closeIconResult.addEventListener('click', () => {
+        activeChart?.destroy();
+        activeChart = undefined;
         chartResultSection.classList.remove('show');
         body.style.overflow = 'auto';
         // Guardo los resultados en el historial
@@ -117,7 +121,7 @@ function showResult(objResult) {
         }]
     };
 
-    const myChart = new Chart(ctx, {
+    activeChart = new Chart(ctx, {
         type: 'pie',
         data: data,
         options: {
@@ -162,13 +166,15 @@ function showResultPrevious (objResult) {
     // Selecciono la section chartResult-section
     const chartResultSection = document.querySelector('.chartResult-section');
     chartResultSection.classList.add('show');
+    activeChart?.destroy();
+    activeChart = undefined;
     chartResultSection.innerHTML = "";
     chartResultSection.innerHTML = `
     <div class="chartResult-section-container">
       <span class="close-icon_result"></span>
       <div class="chartResult-section-contain">
       <h1>Resultados</h1>
-      <p>Nombre del emprendimiento: <span id="nameActivity">${nameActivity}</span></p>
+      <p>Nombre del emprendimiento: <span id="nameActivity">${escapeHtml(nameActivity)}</span></p>
       <p>Capital inicial: <span id="capitalInitial">S/. ${totalInvestmentCapital}</span></p>
       <p>Venta final: <span id="capitalFinal">S/. ${capitalFinal}</span></p>
       <p>La utilidad neta de la inversión es de: <span id="utilidadNeta">S/. ${netProfit}</span></p>
@@ -201,18 +207,18 @@ function showResultPrevious (objResult) {
         <!--filas-->
         <tbody id="table-partners">
           <tr>
-            <td>${partner.name}</td>
+            <td>${escapeHtml(partner.name)}</td>
             <td>S/. ${partner.investmentCapital}</td>
             <td>${partner.percentageProfit}%</td>
             <td>S/. ${partner.netProfitPartner}</td>
           </tr>
         `});
         
-    window.addEventListener('resize', () => {
-        myChart.resize();
-    });
+
     const closeIconResult = document.querySelector('.close-icon_result');
     closeIconResult.addEventListener('click', () => {
+        activeChart?.destroy();
+        activeChart = undefined;
         chartResultSection.classList.remove('show');
         body.style.overflow = 'auto';
 
@@ -229,7 +235,7 @@ function showResultPrevious (objResult) {
         }]
     };
 
-    const myChart = new Chart(ctx, {
+    activeChart = new Chart(ctx, {
         type: 'pie',
         data: data,
         options: {

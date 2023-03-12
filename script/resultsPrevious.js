@@ -1,3 +1,4 @@
+import {escapeHtml} from './escape-html.js';
 // impotar la funcion getResults
 import {getResults, deleteByCreatedAt } from './resultsApp.js';
 
@@ -51,7 +52,7 @@ if (results.length === 0) {
     
         tableBody.innerHTML += `
             <tr>
-                <td>${result.nameActivity}</td>
+                <td>${escapeHtml(result.nameActivity)}</td>
                 <td>${fecha}</td>
                 <td>
                     <button title="Ver" class="btn-result_view"></button>
