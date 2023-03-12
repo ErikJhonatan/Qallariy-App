@@ -1,4 +1,4 @@
-function createResult(nameActivity, startUpCapital, endCapital, investmentPartners){
+function createResult(nameActivity, totalInvestmentCapital, capitalFinal, listPartners = []){
     const day = new Date().getDate();
     const month = new Date().getMonth() + 1;
     const year = new Date().getFullYear();
@@ -9,10 +9,10 @@ function createResult(nameActivity, startUpCapital, endCapital, investmentPartne
     const netProfit = endCapital - startUpCapital;
     const result = {
         nameActivity : nameActivity,
-        startUpCapital : startUpCapital,
-        endCapital : endCapital,
-        investmentPartners : investmentPartners,
+        totalInvestmentCapital: totalInvestmentCapital,
+        capitalFinal: capitalFinal,
         netProfit : netProfit,
+        listPartners: listPartners,
         createdAt: new Date(createdAt)
     };
     return result;
@@ -34,3 +34,5 @@ function getResults(nameItemLocalStorage){
     });
     return resultParse;
 }
+
+export {createResult, saveResults, getResults};
