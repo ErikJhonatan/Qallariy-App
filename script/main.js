@@ -1,4 +1,12 @@
-import {showChartJs} from './chart.js';
+import {showResult} from './showResult.js';
+import {calculateProfitOfEachPartner} from './app.js';
+import { createResult } from './resultsApp.js';
+
+// Cada vez que el usario recargue la pagina se le debe redirigir a sección de inicio
+window.onload = () => {
+    window.location.href = '#inicio';
+}
+
 // Selecciono el btn del formulario principal para generar la sección partners dinámicamente
 const btnForm = document.querySelector('.main-form-btns-submit');
 // Agrego un escuchador de eventos al btn
@@ -83,9 +91,16 @@ function generatePartnersFieldSet() {
         if(!validateForm(inputActivityName, inputCapitalInitial, inputCapitalFinal, selectAmountPartners)){
             return;
         }
+    // deshabilito los inputs del main-form
+    inputActivityName.disabled = true;
+    inputCapitalInitial.disabled = true;
+    inputCapitalFinal.disabled = true;
+    selectAmountPartners.disabled = true;
+    // deshabilito el btn del main-form
+    btnForm.disabled = true;
+
     // El usuario al hacer click en el btnForm, se le debe redirigir a la sección partners
     window.location.href = '#partners';
-
 
     // Selecciona la sección partners
     const partnersSection = document.querySelector('#partners');
@@ -101,7 +116,7 @@ function generatePartnersFieldSet() {
             <legend>Socio ${i+1}</legend>
             <label for="name-partner">
             <h2>Nombre del socio</h2>
-            <input type="text" placeholder="Ej. Juan Pérez">
+            <input id="name-partner" type="text" placeholder="Ej. Juan Pérez">
             </label>
             <label for="capital-partner">
             <h2>Capital del socio</h2>
@@ -117,7 +132,7 @@ function generatePartnersFieldSet() {
     <button class="btn_partners" type="button">Calcular</button>   
     `
     const btnPartners = document.querySelector('.btn_partners');
-    btnPartners.addEventListener('click', showChartJs);
+    
 }
 
 // Selecciono el btn reset del formulario principal
@@ -136,6 +151,7 @@ function resetForm(){
     const inputCapitalFinal = document.querySelector('#capital-final_input');
     // Selecciona la lista desplegable del main-form
     const selectAmountPartners = document.querySelector('.main-form-select');
+
      // Selecciona la sección partners
     const partnersSection = document.querySelector('#partners');
     // Agrego un alert con sweetalert
@@ -162,6 +178,14 @@ function resetForm(){
                     inputCapitalInitial.value = '';
                     inputCapitalFinal.value = '';
                     selectAmountPartners.value = '--';
+                    inputActivityName.disabled = false;
+                    inputCapitalInitial.disabled = false;
+                    inputCapitalFinal.disabled =  false;
+                    selectAmountPartners.disabled = false;
+                    const btnForm = document.querySelector('.main-form-btns-submit');
+                    btnForm.disabled = false;
+            } else {
+                btnReset.disabled = false;
             };
         })
     }
