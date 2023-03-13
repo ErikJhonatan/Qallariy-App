@@ -15,33 +15,13 @@ const body = document.querySelector('body');
 
 
 
-function showResult(objResult){
-  const objTest = {
-    nameActivity: 'Venta de pollos',
-    totalInvestmentCapital: 10000,
-    capitalFinal: 11200,
-    netProfit: 1200,
-    listPartners: [
-        {
-            name: 'Erik Jhonatan',
-            investmentCapital: 5000,
-            percentageProfit: 50,
-            netProfitPartner: 600,
-        },
-        {
-            name: 'Juan Perez',
-            investmentCapital: 5000,
-            percentageProfit: 50,
-            netProfitPartner: 600,
-        },
-    ]
-}
-  const {nameActivity, totalInvestmentCapital, capitalFinal, listPartners} = objTest;
-  const listColoursUse = listColours.slice(0, listPartners.length); 
-  const dataName = listPartners.map(partner => partner.name);
-  const dataNetProfit = listPartners.map(partner => partner.netProfitPartner);
-  let netProfit = capitalFinal - totalInvestmentCapital;
-  body.style.overflow = 'hidden';
+function showResult(objResult) {
+    const { nameActivity, totalInvestmentCapital, capitalFinal, listPartners } = objResult;
+    const listColoursUse = listColours.slice(0, listPartners.length);
+    const dataName = listPartners.map(partner => partner.name);
+    const dataNetProfit = listPartners.map(partner => partner.netProfitPartner);
+    let netProfit = capitalFinal - totalInvestmentCapital;
+    body.style.overflow = 'hidden';
     // Selecciono la section chartResult-section
     const chartResultSection = document.querySelector('.chartResult-section');
     chartResultSection.classList.add('show');
@@ -60,10 +40,10 @@ function showResult(objResult){
       <canvas id="myChart"></canvas>
       </div>
   </div>`
-  const chartResultSectionContainer = document.querySelector('.chartResult-section-container');
-  const table = document.createElement('table');
-  chartResultSectionContainer.appendChild(table);
-  table.innerHTML = `
+    const chartResultSectionContainer = document.querySelector('.chartResult-section-container');
+    const table = document.createElement('table');
+    chartResultSectionContainer.appendChild(table);
+    table.innerHTML = `
   <!--columnas-->
   <thead id="table-columns">
     <tr>
@@ -90,27 +70,27 @@ function showResult(objResult){
             <td>S/. ${partner.netProfitPartner}</td>
           </tr>
         `});
-      window.addEventListener('resize', () => {
+    window.addEventListener('resize', () => {
         myChart.resize();
     });
     const closeIconResult = document.querySelector('.close-icon_result');
     closeIconResult.addEventListener('click', () => {
         chartResultSection.classList.remove('show');
         body.style.overflow = 'auto';
-        
+
     });
     const ctx = document.getElementById('myChart').getContext('2d');
-    
+
     const data = {
         labels: dataName,
         datasets: [{
-        label: 'Mi utilidad Neta',
-        data: dataNetProfit,
-        backgroundColor: listColoursUse,
-        hoverOffset: 4,
+            label: 'Mi utilidad Neta',
+            data: dataNetProfit,
+            backgroundColor: listColoursUse,
+            hoverOffset: 4,
         }]
     };
-    
+
     const myChart = new Chart(ctx, {
         type: 'pie',
         data: data,
@@ -119,7 +99,7 @@ function showResult(objResult){
             plugins: {
                 legend: {
                     position: 'top',
-                    labels:{
+                    labels: {
                         color: '#fff',
                     },
                 },
@@ -131,7 +111,7 @@ function showResult(objResult){
                     },
                     color: '#fff',
                 },
-                subtitle : {
+                subtitle: {
                     display: true,
                     text: 'Mi utilidad Neta',
                     font: {
@@ -145,4 +125,4 @@ function showResult(objResult){
     });
 }
 
-export {showResult}
+export { showResult }

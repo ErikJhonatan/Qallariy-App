@@ -132,7 +132,99 @@ function generatePartnersFieldSet() {
     <button class="btn_partners" type="button">Calcular</button>   
     `
     const btnPartners = document.querySelector('.btn_partners');
-    
+    btnPartners.disabled = true;
+
+    // Selecciono los input de la sección partners para saber si contienen información
+    const inputArray = document.querySelectorAll('.partners_container input');
+    const inputCapitalArray = document.querySelectorAll('.capital-partner input');
+
+    inputArray.forEach(item =>{ item.addEventListener('change',dataEntered);
+    });
+    function dataEntered (){
+        const input = Array.from(inputArray);
+        const inputCapital = Array.from(inputCapitalArray);
+        const inputCompleted = input.every(item => item.value !=='');
+        if(inputCompleted){
+            btnPartners.disabled = false;
+        }
+
+        
+        const capitalInitialValue = document.querySelector('#capital-initial_input').value;
+        const capitalInitialValueNumber = parseFloat(capitalInitialValue);
+        const index = inputCapital.length - 1;
+        const inputCapitalCut = inputCapital.slice(0, index);
+        const state = inputCapitalCut.every(item => item.value !=='');
+        console.log(inputCapitalCut);
+        console.log(state);
+        if (state){
+            console.log('true');
+            const cutInput = inputCapital.slice(0, index);
+            const sumCutInput = cutInput.reduce((acc, item)=>{
+                const itemValue = item.value;
+                const itemValueNumber = itemValue === '' ? 0 : parseFloat(itemValue);
+                return acc + itemValueNumber;
+            },0);
+            const valueCompletedInput = parseFloat(capitalInitialValue) - sumCutInput;
+            inputCapital[index].value = valueCompletedInput;
+        }
+        const sumInvestments = inputCapital.reduce((acc, partner)=>{
+            const partnerValue = partner.value;
+            const partnerValueNumber = partnerValue === '' ? 0 : parseFloat(partnerValue);
+            return acc + partnerValueNumber;
+        },0)
+        console.log(sumInvestments);
+        if(!(sumInvestments <= capitalInitialValueNumber)){
+            swal({
+                title: "Error",
+                text: "La suma de los capitales de los socios debe ser igual al monto de la capital inicial",
+                icon: "error",
+                button: "Aceptar",
+            });
+        } else if(inputCompleted){
+            btnPartners.disabled = false;
+        }
+    };
+    btnPartners.addEventListener('click', calculateResults);
+    function calculateResults(){
+        const inputCapitalArray = document.querySelectorAll('.capital-partner input');
+        const inputCapital = Array.from(inputCapitalArray);
+        const sumInvestments = inputCapital.reduce((acc, partner)=>{
+            const partnerValue = partner.value;
+            const partnerValueNumber = partnerValue === '' ? 0 : parseFloat(partnerValue);
+            return acc + partnerValueNumber;
+        },0)
+        const capitalInitialValue = document.querySelector('#capital-initial_input').value;
+        const capitalInitialValueNumber = parseFloat(capitalInitialValue);
+        if(!(sumInvestments === capitalInitialValueNumber)){
+            swal({
+                title: "Error",
+                text: ` La suma de los capitales de los socios debe ser igual al monto de la capital inicial`,
+                icon: "error",
+                button: "Aceptar",
+            });
+            return;
+        }
+        const partnersContainer = document.querySelectorAll('.partners_container');
+        const partnersContainerArray = Array.from(partnersContainer);
+
+        const listPartners = partnersContainerArray.map(partner => {
+            const namePartner = partner.querySelector('#name-partner').value;
+            const capitalPartner = partner.querySelector('.capital-partner input').value;
+            const capitalPartnerNumber = parseFloat(capitalPartner);
+            return {
+                name: namePartner,
+                investmentCapital: capitalPartnerNumber
+            }
+        });
+        
+        const resultCreate = createResult(inputActivityName.value, inputCapitalInitial.value, inputCapitalFinal.value, listPartners);
+        console.log(resultCreate);
+        const listPartnersResultArray = calculateProfitOfEachPartner(resultCreate);
+        resultCreate.listPartners = listPartnersResultArray;
+        console.log(resultCreate);
+        showResult(resultCreate);
+    }
+
 }
 
 // Selecciono el btn reset del formulario principal
