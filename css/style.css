@@ -574,6 +574,9 @@ main {
     animation: fadeIn 1.5s ease-in-out;
     padding: 0 24px;
 }
+.swal-overlay--show-modal .swal-modal{
+    will-change: auto !important;
+}
 
 @keyframes fadeIn {
     0% {
@@ -722,6 +725,14 @@ table #table-partners {
     transform: scale(0.9);
     transition: all 0.3s ease-in-out;
 }
+
+.btn_partners:disabled {
+    opacity: 0.5;
+    color: var(--white);
+    border: 1px solid var(--primary-color);
+    cursor: not-allowed;
+}
+
 @media (max-width: 768px) {
     .chartResult-section .chartResult{
         width: 500px;

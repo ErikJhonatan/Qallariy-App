@@ -6,11 +6,11 @@ function createResult(nameActivity, totalInvestmentCapital, capitalFinal, listPa
     const minutes = new Date().getMinutes();
     const seconds = new Date().getSeconds();
     const createdAt = `${day}/${month}/${year} ${hour}:${minutes}:${seconds}`;
-    const netProfit = endCapital - startUpCapital;
+    const netProfit = parseFloat(capitalFinal) - parseFloat(totalInvestmentCapital);
     const result = {
         nameActivity : nameActivity,
-        totalInvestmentCapital: totalInvestmentCapital,
-        capitalFinal: capitalFinal,
+        totalInvestmentCapital: parseFloat(totalInvestmentCapital),
+        capitalFinal: parseFloat(capitalFinal),
         netProfit : netProfit,
         listPartners: listPartners,
         createdAt: new Date(createdAt)
