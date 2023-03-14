@@ -31,3 +31,5 @@ Consulta `LICENSE.md`. La página de presentación del proyecto está en [landin
 ## Cambios de comportamiento
 
 La distribución exige capital positivo y aportes positivos que sumen el capital inicial. Se calcula en céntimos y los céntimos restantes se asignan a los mayores restos proporcionales para conservar la utilidad total. Un historial dañado se omite al leerlo; los nombres se presentan como texto.
+
+El historial informa cuando el almacenamiento del navegador falla; los resultados no se anuncian como guardados o eliminados en ese caso.

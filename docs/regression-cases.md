@@ -12,3 +12,10 @@ Prepared for this change. **Not executed.** Tests, manual checks, lint and build
 | Chart cleanup | Open/close result repeatedly then resize | Previous Chart destroyed; resize listeners do not accumulate |
 
 Automated cases are prepared in `tests/regression.test.mjs`. After authorization, run `node --test tests/regression.test.mjs`. They have not been executed.
+
+## Additional cases (not executed)
+
+| Case | Input or setup | Expected outcome |
+| --- | --- | --- |
+| Unavailable storage | setItem throws on saving or deleting a result | UI displays failure; history is not reported as saved or deleted |
+| Result table | Open current and previous results repeatedly | One tbody, valid rows, no duplicate IDs; September date has a two-digit month |

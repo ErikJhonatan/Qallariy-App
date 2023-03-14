@@ -6,7 +6,7 @@ import { showResultPrevious } from './showResult.js';
 function renderResultsPrevious() {
     const tableResultsContainer = document.querySelector('.table-results-previous-contain');
 
-const results = getResults() ? getResults() : [];
+const results = getResults();
 
 if (results.length === 0) {
     tableResultsContainer.innerHTML = `
@@ -40,12 +40,11 @@ if (results.length === 0) {
     const tableBody = document.querySelector('.table-results-previous-contain tbody');
     
     results.forEach(result => {
-        console.log(result);
         const now = new Date(result.createdAt);
         // date 3 => 03
         const date = now.getDate() < 10 ? `0${now.getDate()}` : now.getDate();
         // month 3 => 03
-        const month = now.getMonth() < 10 ? `0${now.getMonth()+ 1}` : now.getMonth() + 1;
+        const month = now.getMonth() + 1 < 10 ? `0${now.getMonth()+ 1}` : now.getMonth() + 1;
         const year = now.getFullYear();
         const fecha = `${date}/${month}/${year}`;
         // fecha con formato dd/mm/yyyy
@@ -82,11 +81,11 @@ if (results.length === 0) {
             })
             .then((willDelete) => {
                 if (willDelete) {
-                    swal("El resultado ha sido eliminado", {
-                        icon: "success",
-                    });
                     const index = Array.from(btnDeleteResult).indexOf(btn);
-                    deleteByCreatedAt(results[index].createdAt);
+                    const deleted = deleteByCreatedAt(results[index].createdAt);
+                    swal(deleted ? 'El resultado ha sido eliminado' : 'No se pudo eliminar', {
+                        icon: deleted ? 'success' : 'error',
+                    });
                     renderResultsPrevious();
                 } else {
                     swal("El resultado no ha sido eliminado");

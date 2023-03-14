@@ -1,6 +1,6 @@
 import {escapeHtml} from './escape-html.js';
 import { partnersSection, inputActivityName, inputCapitalInitial, inputCapitalFinal, selectAmountPartners } from './main.js';
-import {saveResults, getResults} from './resultsApp.js';
+import {saveResults} from './resultsApp.js';
 import { renderResultsPrevious } from './resultsPrevious.js';
 
 
@@ -55,34 +55,13 @@ function showResult(objResult) {
     const chartResultSectionContainer = document.querySelector('.chartResult-section-container');
     const table = document.createElement('table');
     chartResultSectionContainer.appendChild(table);
-    table.innerHTML = `
-  <!--columnas-->
-  <thead id="table-columns">
-    <tr>
-      <th>Socio</th>
-      <th>Inv. inicial</th>
-      <th>% de utilidad</th>
-      <th>Util. neta</th>
-    </tr>
-    <!--filas-->
-    <tbody id="table-partners">
-  </thead>
-</table>`;
-    const tablePartners = document.querySelector('#table-partners');
+    table.innerHTML = `<thead id="table-columns"><tr><th>Socio</th><th>Inv. inicial</th><th>% de utilidad</th><th>Util. neta</th></tr></thead><tbody id="table-partners"></tbody>`;
+    const tablePartners = table.querySelector('tbody');
     listPartners.forEach(partner => {
         const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${escapeHtml(partner.name)}</td><td>S/. ${partner.investmentCapital}</td><td>${partner.percentageProfit}%</td><td>S/. ${partner.netProfitPartner}</td>`;
         tablePartners.appendChild(tr);
-        tr.innerHTML = `
-        <!--filas-->
-        <tbody id="table-partners">
-          <tr>
-            <td>${escapeHtml(partner.name)}</td>
-            <td>S/. ${partner.investmentCapital}</td>
-            <td>${partner.percentageProfit}%</td>
-            <td>S/. ${partner.netProfitPartner}</td>
-          </tr>
-        `});
-        
+    });
 
     const closeIconResult = document.querySelector('.close-icon_result');
     closeIconResult.addEventListener('click', () => {
@@ -91,9 +70,10 @@ function showResult(objResult) {
         chartResultSection.classList.remove('show');
         body.style.overflow = 'auto';
         // Guardo los resultados en el historial
-        saveResults(objResult);
-
-        swal ( "¡Gracias por usar nuestra aplicación web!" ,  "Sus resultados se han guardado en su historial" ,  "success" );
+        const saved = saveResults(objResult);
+        swal(saved ? '¡Gracias por usar nuestra aplicación web!' : 'No se pudo guardar',
+            saved ? 'Sus resultados se han guardado en su historial' : 'El almacenamiento del navegador no está disponible',
+            saved ? 'success' : 'error');
         
         renderResultsPrevious();
         // Reseteo los inputs del formulario principal
@@ -186,34 +166,13 @@ function showResultPrevious (objResult) {
     const chartResultSectionContainer = document.querySelector('.chartResult-section-container');
     const table = document.createElement('table');
     chartResultSectionContainer.appendChild(table);
-    table.innerHTML = `
-  <!--columnas-->
-  <thead id="table-columns">
-    <tr>
-      <th>Socio</th>
-      <th>Inv. inicial</th>
-      <th>% de utilidad</th>
-      <th>Util. neta</th>
-    </tr>
-    <!--filas-->
-    <tbody id="table-partners">
-  </thead>
-</table>`;
-    const tablePartners = document.querySelector('#table-partners');
+    table.innerHTML = `<thead id="table-columns"><tr><th>Socio</th><th>Inv. inicial</th><th>% de utilidad</th><th>Util. neta</th></tr></thead><tbody id="table-partners"></tbody>`;
+    const tablePartners = table.querySelector('tbody');
     listPartners.forEach(partner => {
         const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${escapeHtml(partner.name)}</td><td>S/. ${partner.investmentCapital}</td><td>${partner.percentageProfit}%</td><td>S/. ${partner.netProfitPartner}</td>`;
         tablePartners.appendChild(tr);
-        tr.innerHTML = `
-        <!--filas-->
-        <tbody id="table-partners">
-          <tr>
-            <td>${escapeHtml(partner.name)}</td>
-            <td>S/. ${partner.investmentCapital}</td>
-            <td>${partner.percentageProfit}%</td>
-            <td>S/. ${partner.netProfitPartner}</td>
-          </tr>
-        `});
-        
+    });
 
     const closeIconResult = document.querySelector('.close-icon_result');
     closeIconResult.addEventListener('click', () => {

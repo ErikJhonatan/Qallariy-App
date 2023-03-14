@@ -32,3 +32,17 @@ test('small distributions never create negative positive-profit shares', () => {
   assert.equal(result.reduce((sum, partner) => sum + Math.round(partner.netProfitPartner * 100), 0), 2);
   assert.ok(result.every(partner => partner.netProfitPartner >= 0));
 });
+
+test('reports failed persistence instead of claiming success', async () => {
+  const source = await readFile(new URL('../script/resultsApp.js', import.meta.url), 'utf8');
+  const {saveResults, deleteByCreatedAt} = await import('data:text/javascript;base64,' + Buffer.from(source).toString('base64'));
+  const previous = globalThis.localStorage;
+  globalThis.localStorage = {getItem: () => '[]', setItem: () => {throw new Error('Quota exceeded');}};
+  try {
+    assert.equal(saveResults({}), false);
+    assert.equal(deleteByCreatedAt(new Date()), false);
+  } finally {
+    if (previous === undefined) delete globalThis.localStorage;
+    else globalThis.localStorage = previous;
+  }
+});
