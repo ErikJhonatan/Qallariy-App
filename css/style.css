@@ -392,6 +392,11 @@ main {
     margin-bottom: 24px;
     text-align: center;
 }
+.form-partners p {
+    font-family: 'poppins';
+    color: var(--text-color-dark);
+
+}
 .form-partners_fieldset fieldset {
     width: 300px;
     margin: 20px;
