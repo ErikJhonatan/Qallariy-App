@@ -1,10 +1,14 @@
 import {showResult} from './showResult.js';
 import {calculateProfitOfEachPartner} from './app.js';
-import { createResult } from './resultsApp.js';
+import { createResult, getResults } from './resultsApp.js';
+import { renderResultsPrevious} from './resultsPrevious.js';
 
+
+renderResultsPrevious();
 // Cada vez que el usario recargue la pagina se le debe redirigir a sección de inicio
 window.onload = () => {
     window.location.href = '#inicio';
+    console.log('hola');
 }
 
 // Selecciono el btn del formulario principal para generar la sección partners dinámicamente
@@ -168,10 +172,10 @@ function generatePartnersFieldSet() {
             },0);
             const valueCompletedInput = parseFloat(capitalInitialValue) - sumCutInput;
 
-            if ((valueCompletedInput < 0)){
+            if ((valueCompletedInput < 0 || valueCompletedInput === 0)){
                 swal({
                     title: "Error",
-                    text: "El monto del capital de los socios no puede ser mayor al monto de la capital inicial",
+                    text: "El monto del capital de un socio no puede ser mayor o igual al monto de la capital inicial",
                     icon: "error",
                     button: "Aceptar",
                 });
@@ -201,6 +205,7 @@ function generatePartnersFieldSet() {
                 icon: "error",
                 button: "Aceptar",
             });
+            console.log(sumInvestments, capitalInitialValueNumber);
         } else if(inputCompleted){
             btnPartners.disabled = false;
         }
@@ -242,10 +247,9 @@ function generatePartnersFieldSet() {
         console.log(resultCreate);
         const listPartnersResultArray = calculateProfitOfEachPartner(resultCreate);
         resultCreate.listPartners = listPartnersResultArray;
-        console.log(resultCreate);
+        console.log(resultCreate.createdAt);
         showResult(resultCreate);
     }
-
 }
 
 // Selecciono el btn reset del formulario principal
@@ -317,6 +321,8 @@ arrayInputs.forEach(input => input.addEventListener('change', () => {
         btnReset.disabled = false;
 }
 ));
+
+export { partnersSection, inputActivityName, inputCapitalInitial, inputCapitalFinal, selectAmountPartners };
 
 
 
