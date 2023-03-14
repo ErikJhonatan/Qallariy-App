@@ -1,38 +1,51 @@
-function createResult(nameActivity, totalInvestmentCapital, capitalFinal, listPartners = []){
-    const day = new Date().getDate();
-    const month = new Date().getMonth() + 1;
-    const year = new Date().getFullYear();
-    const hour = new Date().getHours();
-    const minutes = new Date().getMinutes();
-    const seconds = new Date().getSeconds();
-    const createdAt = `${day}/${month}/${year} ${hour}:${minutes}:${seconds}`;
+function createResult(nameActivity, totalInvestmentCapital, capitalFinal, listPartners = []) {
+    const now = new Date();
     const netProfit = parseFloat(capitalFinal) - parseFloat(totalInvestmentCapital);
     const result = {
-        nameActivity : nameActivity,
+        nameActivity: nameActivity,
         totalInvestmentCapital: parseFloat(totalInvestmentCapital),
         capitalFinal: parseFloat(capitalFinal),
-        netProfit : netProfit,
+        netProfit: netProfit,
         listPartners: listPartners,
-        createdAt: new Date(createdAt)
+        createdAt: now
     };
     return result;
 }
-function saveResults(nameItemLocalStorage, objectResult){
-    if(localStorage.getItem(nameItemLocalStorage) === null){
-        localStorage.setItem(nameItemLocalStorage, JSON.stringify([]));
+function saveResults(objectResult){
+    const nameItemLocalStorage = 'results_qallariy-App-1.0.0';
+    let results = JSON.parse(localStorage.getItem(nameItemLocalStorage));
+    if(results === null){
+        results = [];
     }
-    const results = getResults(nameItemLocalStorage);
     results.push(objectResult);
     localStorage.setItem(nameItemLocalStorage, JSON.stringify(results));
 }
-function getResults(nameItemLocalStorage){
-    const results = localStorage.getItem(nameItemLocalStorage);
-    const resultParse = JSON.parse(results);
-    resultParse.map(result => {
-        result.createdAt = new Date(result.createdAt);
-        return result;
-    });
-    return resultParse;
+
+function getResults(){
+    const nameItemLocalStorage = 'results_qallariy-App-1.0.0';
+    const results = JSON.parse(localStorage.getItem(nameItemLocalStorage));
+
+    if (results === null) {
+        return [];
+    } else {
+        results.forEach(result => {
+            result.createdAt = new Date(result.createdAt);
+        });
+        console.log(results);
+    }
+    
+    return results;
 }
 
-export {createResult, saveResults, getResults};
+function deleteByCreatedAt(createdAt) {
+    const results = getResults();
+    const newResults = results.filter(resultFilter => {
+      const resultCreatedAt = new Date(resultFilter.createdAt);
+      const targetCreatedAt = new Date(createdAt);
+      return resultCreatedAt.getTime() !== targetCreatedAt.getTime();
+    });
+    localStorage.setItem('results_qallariy-App-1.0.0', JSON.stringify(newResults));
+    console.log('newResults', newResults);
+    console.log('localStorage', localStorage.getItem('results_qallariy-App-1.0.0'));
+  }
+export {createResult, saveResults, getResults, deleteByCreatedAt};
