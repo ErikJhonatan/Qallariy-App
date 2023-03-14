@@ -108,6 +108,8 @@ function generatePartnersFieldSet() {
     const amountPartners = selectAmountPartners.value;
     // Agrego un h1 a la sección partners
     partnersSection.appendChild(document.createElement('h1')).textContent = 'Ingresa los datos de los socios';
+    partnersSection.appendChild(document.createElement('p')).textContent = 'Capital inicial: S/. ' + inputCapitalInitial.value;
+    partnersSection.appendChild(document.createElement('p')).textContent = 'Capital final: S/. ' + inputCapitalFinal.value;
     const partnersFieldSetContainer = partnersSection.appendChild(document.createElement('div'));
     partnersFieldSetContainer.classList.add('form-partners_fieldset');
     for(let i = 0; i<amountPartners; i++){
@@ -165,7 +167,26 @@ function generatePartnersFieldSet() {
                 return acc + itemValueNumber;
             },0);
             const valueCompletedInput = parseFloat(capitalInitialValue) - sumCutInput;
+
+            if ((valueCompletedInput < 0)){
+                swal({
+                    title: "Error",
+                    text: "El monto del capital de los socios no puede ser mayor al monto de la capital inicial",
+                    icon: "error",
+                    button: "Aceptar",
+                });
+                inputCapital[index].value = '';
+                inputCapital[index-1].value = '';
+                btnPartners.disabled = true;
+                return;
+            }
+
             inputCapital[index].value = valueCompletedInput;
+            const inputCompleted = input.every(item => item.value !=='');
+            if(inputCompleted){
+                btnPartners.disabled = false;
+            }
+
         }
         const sumInvestments = inputCapital.reduce((acc, partner)=>{
             const partnerValue = partner.value;
