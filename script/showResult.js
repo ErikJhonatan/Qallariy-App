@@ -39,9 +39,9 @@ function showResult(objResult) {
       <span class="close-icon_result"></span>
       <div class="chartResult-section-contain">
       <h1>Resultados</h1>
-      <p>Nombre de la actividad: <span id="nameActivity">${nameActivity}</span></p>
+      <p>Nombre del emprendimiento: <span id="nameActivity">${nameActivity}</span></p>
       <p>Capital inicial: <span id="capitalInitial">S/. ${totalInvestmentCapital}</span></p>
-      <p>Capital final: <span id="capitalFinal">S/. ${capitalFinal}</span></p>
+      <p>Venta final: <span id="capitalFinal">S/. ${capitalFinal}</span></p>
       <p>La utilidad neta de la inversión es de: <span id="utilidadNeta">S/. ${netProfit}</span></p>
       </div>
       <div class="chartResult">
@@ -168,9 +168,9 @@ function showResultPrevious (objResult) {
       <span class="close-icon_result"></span>
       <div class="chartResult-section-contain">
       <h1>Resultados</h1>
-      <p>Nombre de la actividad: <span id="nameActivity">${nameActivity}</span></p>
+      <p>Nombre del emprendimiento: <span id="nameActivity">${nameActivity}</span></p>
       <p>Capital inicial: <span id="capitalInitial">S/. ${totalInvestmentCapital}</span></p>
-      <p>Capital final: <span id="capitalFinal">S/. ${capitalFinal}</span></p>
+      <p>Venta final: <span id="capitalFinal">S/. ${capitalFinal}</span></p>
       <p>La utilidad neta de la inversión es de: <span id="utilidadNeta">S/. ${netProfit}</span></p>
       </div>
       <div class="chartResult">
