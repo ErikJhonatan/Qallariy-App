@@ -27,7 +27,7 @@ if (results.length === 0) {
     <!--columnas-->
    <thead>
      <tr>
-       <th>Nombre de la actividad</th>
+       <th>Nombre del empredimiento</th>
        <th>Fecha</th>
        <th>Acciones</th>
    </tr>
@@ -54,14 +54,14 @@ if (results.length === 0) {
                 <td>${result.nameActivity}</td>
                 <td>${fecha}</td>
                 <td>
-                    <button  class="btn-result_view">Ver</button>
-                    <button class="btn-results">Eliminar</button>
+                    <button title="Ver" class="btn-result_view"></button>
+                    <button title="Eliminar" class="btn-results_delete"></button>
                 </td>
             </tr>
         `;
     });
     const btnViewResult = tableBody.querySelectorAll('.btn-result_view');
-    const btnDeleteResult = tableBody.querySelectorAll('.btn-results');
+    const btnDeleteResult = tableBody.querySelectorAll('.btn-results_delete');
 
     btnViewResult.forEach(btn => {
         btn.addEventListener('click', () => {
