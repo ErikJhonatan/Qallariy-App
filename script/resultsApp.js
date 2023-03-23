@@ -31,7 +31,7 @@ function getResults(){
         results.forEach(result => {
             result.createdAt = new Date(result.createdAt);
         });
-        console.log(results);
+        
     }
     
     return results;
@@ -40,8 +40,8 @@ function getResults(){
 function deleteByCreatedAt(createdAt) {
     const results = getResults();
     const newResults = results.filter(resultFilter => {
-      const resultCreatedAt = new Date(resultFilter.createdAt);
-      const targetCreatedAt = new Date(createdAt);
+    const resultCreatedAt = new Date(resultFilter.createdAt);
+    const targetCreatedAt = new Date(createdAt);
       return resultCreatedAt.getTime() !== targetCreatedAt.getTime();
     });
     localStorage.setItem('results_qallariy-App-1.0.0', JSON.stringify(newResults));

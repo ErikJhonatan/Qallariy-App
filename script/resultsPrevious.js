@@ -6,7 +6,6 @@ function renderResultsPrevious() {
     const tableResultsContainer = document.querySelector('.table-results-previous-contain');
 
 const results = getResults() ? getResults() : [];
-console.log('renderResultsPrevious', results);
 
 if (results.length === 0) {
     tableResultsContainer.innerHTML = `
@@ -23,7 +22,7 @@ if (results.length === 0) {
     results.forEach(result => {
         result.createdAt = new Date(result.createdAt);
     });
-    console.log(results);
+    
     tableResultsContainer.innerHTML = `<table>
     <!--columnas-->
    <thead>
@@ -40,6 +39,7 @@ if (results.length === 0) {
     const tableBody = document.querySelector('.table-results-previous-contain tbody');
     
     results.forEach(result => {
+        console.log(result);
         const now = new Date(result.createdAt);
         // date 3 => 03
         const date = now.getDate() < 10 ? `0${now.getDate()}` : now.getDate();
@@ -48,50 +48,51 @@ if (results.length === 0) {
         const year = now.getFullYear();
         const fecha = `${date}/${month}/${year}`;
         // fecha con formato dd/mm/yyyy
-        
+    
         tableBody.innerHTML += `
-        <tr>
-            <td>${result.nameActivity}</td>
-            <td>${fecha}</td>
-            <td>
-            <button class="btn-result_view">Ver</button>
-            <button class="btn-results">Eliminar</button>
-            </td>
-      </tr>
-        `
-        const btnViewResult = document.querySelectorAll('.btn-result_view');
-        const btnDeleteResult = document.querySelectorAll('.btn-results');
+            <tr>
+                <td>${result.nameActivity}</td>
+                <td>${fecha}</td>
+                <td>
+                    <button  class="btn-result_view">Ver</button>
+                    <button class="btn-results">Eliminar</button>
+                </td>
+            </tr>
+        `;
+    });
+    const btnViewResult = tableBody.querySelectorAll('.btn-result_view');
+    const btnDeleteResult = tableBody.querySelectorAll('.btn-results');
 
-        btnViewResult.forEach(btn => {
-            btn.addEventListener('click', () => {
-                showResultPrevious(result);
-            });
-        }
-        );
-        btnDeleteResult.forEach(btn => {
-            btn.addEventListener('click', () => {
-                swal({
-                    title: "¿Estás seguro?",
-                    text: "Una vez eliminado, no podrás recuperar este resultado",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            swal("El resultado ha sido eliminado", {
-                                icon: "success",
-                            });
-                            deleteByCreatedAt(result.createdAt);
-                            renderResultsPrevious();
-                        } else {
-                            swal("El resultado no ha sido eliminado");
-                        }
+    btnViewResult.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const index = Array.from(btnViewResult).indexOf(btn);
+            showResultPrevious(results[index]);
+        });
+    });
+
+    btnDeleteResult.forEach(btn => {
+        btn.addEventListener('click', () => {
+            swal({
+                title: "¿Estás seguro?",
+                text: "Una vez eliminado, no podrás recuperar este resultado",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("El resultado ha sido eliminado", {
+                        icon: "success",
                     });
+                    const index = Array.from(btnDeleteResult).indexOf(btn);
+                    deleteByCreatedAt(results[index].createdAt);
+                    renderResultsPrevious();
+                } else {
+                    swal("El resultado no ha sido eliminado");
+                }
             });
-        }
-        );
-    })
+        });
+    });
 }
 }
 export { renderResultsPrevious };
