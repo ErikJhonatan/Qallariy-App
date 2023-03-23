@@ -8,7 +8,6 @@ renderResultsPrevious();
 // Cada vez que el usario recargue la pagina se le debe redirigir a sección de inicio
 window.onload = () => {
     window.location.href = '#inicio';
-    console.log('hola');
 }
 
 // Selecciono el btn del formulario principal para generar la sección partners dinámicamente
