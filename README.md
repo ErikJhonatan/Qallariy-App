@@ -1,16 +1,29 @@
-# Qallariy-App
-Desarrollo de un modelo en JavaScript para calcular la distribución y utilidad neta en una inversión entre los socios en función de su inversión inicial
-Este proyecto tiene como objetivo desarrollar un modelo en JavaScript para calcular la distribución de la utilidad neta en una inversión entre los socios, teniendo en cuenta la inversión inicial de cada uno. El modelo se basará en fórmulas y cálculos matemáticos que se aplicarán a los datos de inversión y participación de cada socio, así como a los ingresos y gastos totales del proyecto.
+# Qallariy · Distribución de utilidades
 
-# Instalación
-Para utilizar el modelo, simplemente descarga los archivos y abre el archivo index.html en un navegador web.
+Aplicación JavaScript para distribuir la utilidad de una inversión entre socios según su aporte y guardar resultados en el navegador.
 
-# Uso
-El modelo en JavaScript permitirá calcular de manera eficiente la distribución de la utilidad neta en una inversión entre los socios. Para utilizarlo, sigue estos pasos:
+## Qué resuelve
 
-Abre el archivo index.html en un navegador web.
-Ingresa los datos de inversión y participación de cada socio, así como los ingresos y gastos totales del proyecto.
-Haz clic en el botón "Calcular" para obtener la distribución de la utilidad neta entre los socios.
+Permite registrar una actividad, el capital inicial y final y los aportes de los socios. Calcula la utilidad total como capital final menos capital inicial y reparte esa utilidad de forma proporcional al aporte de cada socio.
 
-# Licencia
-Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo LICENSE.md para más detalles.
+El código guarda resultados en `localStorage` para consultarlos posteriormente desde el mismo navegador.
+
+## Organización
+
+- `script/app.js`: cálculo de participación y utilidad por socio.
+- `script/resultsApp.js`: creación, persistencia y eliminación de resultados.
+- `script/main.js`: flujo de captura de datos.
+- `script/showResult.js`: presentación de resultados.
+- `index.html`, `css/` y `assets/`: interfaz y recursos.
+
+## Uso local
+
+Sirve la carpeta con un servidor estático y abre `index.html`. La aplicación utiliza módulos JavaScript del navegador. No requiere un backend propio ni tiene un archivo de dependencias npm.
+
+## Estado
+
+Proyecto académico. Utiliza números de JavaScript y redondeo a dos decimales; no debe presentarse como un motor contable de dinero exacto. Esta revisión no ejecutó pruebas ni verificó un despliegue.
+
+## Licencia
+
+Consulta `LICENSE.md`. La página de presentación del proyecto está en [landing-page-qallary](https://github.com/ErikJhonatan/landing-page-qallary).
