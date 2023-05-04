@@ -134,7 +134,7 @@ function generatePartnersFieldSet() {
         `
     }
     const partnerNumber = document.querySelector('.partner-number');
-    parnetNumber.innerHTML = 'Socio 1 (Emprendedor principal)';
+    partnerNumber.innerHTML = 'Socio 1 (Emprendedor principal)';
     
     partnersSection.innerHTML += `
     <button class="btn_partners" type="button">Calcular</button>   
