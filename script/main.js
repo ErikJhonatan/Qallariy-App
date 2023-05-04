@@ -118,7 +118,7 @@ function generatePartnersFieldSet() {
     for(let i = 0; i<amountPartners; i++){
         partnersFieldSetContainer.innerHTML += `
             <fieldset class="partners_container">
-            <legend>Socio ${i+1}</legend>
+            <legend class="partner-number">Socio ${i+1}</legend>
             <label for="name-partner">
             <h2>Nombre del socio</h2>
             <input id="name-partner" type="text" placeholder="Ej. Juan Pérez">
@@ -133,6 +133,9 @@ function generatePartnersFieldSet() {
         </fieldset>
         `
     }
+    const partnerNumber = document.querySelector('.partner-number');
+    parnetNumber.innerHTML = 'Socio 1 (Emprendedor principal)';
+    
     partnersSection.innerHTML += `
     <button class="btn_partners" type="button">Calcular</button>   
     `
@@ -322,6 +325,3 @@ arrayInputs.forEach(input => input.addEventListener('change', () => {
 ));
 
 export { partnersSection, inputActivityName, inputCapitalInitial, inputCapitalFinal, selectAmountPartners };
-
-
-
